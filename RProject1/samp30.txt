@@ -1,0 +1,1 @@
+"","X","Open","High","Low","Close","TRs","PCHG","AvgRet","SD20","ProbRet","TRNu","DateTime"

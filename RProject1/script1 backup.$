@@ -1,0 +1,35 @@
+library('quantmod')
+tickers <- c('test1')
+#getSymbols(tickers, src = 'csv')
+#df <- read.csv(file = 'ind1.txt', header = TRUE)
+df <- read.csv(file ='ESH19 FEb22 Daily.txt', header = TRUE)
+#rownames(df)
+nrow(df)
+ncol(df)
+colnames(df)
+
+m1 <- as.matrix(df[,c('High','Low','Close') ])
+colnames(m1) <- c('High', 'Low', 'Close')
+typeof(m1)
+
+ncol(m1)
+
+nrow(m1)
+colnames(m1)
+
+Avg <- apply(m1[, c('High', 'Low', 'Close')], 1, FUN = mean)
+
+m2 <- cbind(m1, Avg)
+DiffHL <- apply(m2[, c('Low', 'High')], 1, FUN = diff)
+m2 <- cbind(m2, DiffHL)
+write.csv(m2, file = 'm2.txt')
+apply(m2, 1, function(x) pivotStandard(x['High'], x['Low'], x['Close']))
+
+
+pivotStandard <- function(h, l, c) {
+    pS <- sum(h, l, c) / 3
+    pS1 <- 2 * pS - h
+    pS2 <- pS - (h - l)
+    pSupports <- c(pS, pS1, pS2)
+    pSupports
+}
