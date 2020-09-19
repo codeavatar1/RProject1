@@ -10,7 +10,8 @@ e <- globalenv()
 e.prod <- 0
 if (e.prod) setwd('C:\\Users\\bvh8924\\Scripts\\')
 wd <- getwd()
-
+myenv <-e
+directory <- myenv$workDir
 
 
 e$scriptDir <- paste(wd, "\\", sep = "")
@@ -19,10 +20,17 @@ source(paste(e$scriptDir, 'envall.R', sep = ""), echo = FALSE)
 if (!exists("foo", mode = "function")) source(paste(e$prodDir, 'myFUN.R', sep = ''), echo =FALSE )
 
 
-tickers <- c('^GSPC', 'SDS', 'SSO', '^VIX')
+symbolslist <- read.csv(file = paste(myenv$tradestationOutDir, "symbols.csv", sep = ''))
+s1 <- symbolslist[,1]
+s1
 
-getSymbols(tickers, src = 'yahoo', from = '2018-01-01')
-write.csv(GSPC< file ="GSPC.txt")
+
+
+
+getSymbols("NKLA", src = 'yahoo', from = '2018-01-01')
+
+
+write.zoo(NKLA, file = paste(myenv$tradestationOutDir, "GSPC.txt", sep = ''))
 
 params <- commandArgs(trailingOnly = TRUE)
 print(params)
@@ -86,3 +94,9 @@ statsfinal <- as.data.frame(statsfinal)
 statsfinal[1, 1]
 statsfinal[2, 1]
 
+
+ncol(symbolslist)
+
+
+
+nrow(symbolslist)
